@@ -24,5 +24,5 @@ public interface RemoteFileService {
      * @return 结果
      */
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Rust<SysFile> upload(@RequestPart(value = "file") MultipartFile file);
+    Rust<SysFile> upload(@RequestPart(value = "file") MultipartFile file);
 }
