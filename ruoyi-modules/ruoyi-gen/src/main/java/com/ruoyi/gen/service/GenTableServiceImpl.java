@@ -128,7 +128,6 @@ public class GenTableServiceImpl implements IGenTableService {
      * 修改业务
      *
      * @param genTable 业务信息
-     * @return 结果
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -147,7 +146,6 @@ public class GenTableServiceImpl implements IGenTableService {
      * 删除业务对象
      *
      * @param tableIds 需要删除的数据ID
-     * @return 结果
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -296,7 +294,7 @@ public class GenTableServiceImpl implements IGenTableService {
                 }
                 if (StringUtils.isNotEmpty(prevColumn.getIsRequired()) && !column.isPk()) {
                     if (column.isInsert() || column.isEdit()) {
-                        if (column.isUsableColumn() || (!column.isSuperColumn())) {
+                        if (column.isUsableColumn() || (column.isSuperColumn())) {
                             // 如果是(新增/修改&非主键/非忽略及父属性)，继续保留必填/显示类型选项
                             column.setIsRequired(prevColumn.getIsRequired());
                             column.setHtmlType(prevColumn.getHtmlType());

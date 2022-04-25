@@ -11,8 +11,8 @@ import com.ruoyi.gen.domain.GenTable;
 import com.ruoyi.gen.domain.GenTableColumn;
 import com.ruoyi.gen.service.IGenTableColumnService;
 import com.ruoyi.gen.service.IGenTableService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +28,11 @@ import java.util.Map;
  * @author ruoyi
  */
 @RequestMapping("/gen")
+@RequiredArgsConstructor
 @RestController
 public class GenController extends BaseController {
-    @Autowired
-    private IGenTableService genTableService;
-
-    @Autowired
-    private IGenTableColumnService genTableColumnService;
+    private final IGenTableService genTableService;
+    private final IGenTableColumnService genTableColumnService;
 
     /**
      * 查询代码生成列表
@@ -56,7 +54,7 @@ public class GenController extends BaseController {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTable> tables = genTableService.selectGenTableAll();
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-        Map<String, Object> map = new HashMap<String, Object>(2);
+        Map<String, Object> map = new HashMap<>(2);
         map.put("info", table);
         map.put("rows", list);
         map.put("tables", tables);
@@ -128,7 +126,7 @@ public class GenController extends BaseController {
      */
     @RequiresPermissions("tool:gen:preview")
     @GetMapping("/preview/{tableId}")
-    public AjaxResult preview(@PathVariable("tableId") Long tableId) throws IOException {
+    public AjaxResult preview(@PathVariable("tableId") Long tableId) {
         Map<String, String> dataMap = genTableService.previewCode(tableId);
         return AjaxResult.success(dataMap);
     }

@@ -4,7 +4,7 @@ import com.ruoyi.file.config.MinioConfig;
 import com.ruoyi.file.utils.FileUploadUtils;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,19 +14,17 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ruoyi
  */
 @Service
+@RequiredArgsConstructor
 public class MinioSysFileServiceImpl implements ISysFileService {
-    @Autowired
-    private MinioConfig minioConfig;
-
-    @Autowired
-    private MinioClient client;
+    private final MinioConfig minioConfig;
+    private final MinioClient client;
 
     /**
      * 本地文件上传接口
      *
      * @param file 上传的文件
      * @return 访问地址
-     * @throws Exception
+     * @throws Exception \
      */
     @Override
     public String uploadFile(MultipartFile file) throws Exception {

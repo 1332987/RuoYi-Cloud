@@ -124,7 +124,7 @@ public class VelocityUtils {
      * @return 模板列表
      */
     public static List<String> getTemplateList(String tplCategory) {
-        List<String> templates = new ArrayList<String>();
+        List<String> templates = new ArrayList<>();
         templates.add("vm/java/domain.java.vm");
         templates.add("vm/java/mapper.java.vm");
         templates.add("vm/java/service.java.vm");
@@ -222,15 +222,15 @@ public class VelocityUtils {
     public static HashSet<String> getImportList(GenTable genTable) {
         List<GenTableColumn> columns = genTable.getColumns();
         GenTable subGenTable = genTable.getSubTable();
-        HashSet<String> importList = new HashSet<String>();
+        HashSet<String> importList = new HashSet<>();
         if (StringUtils.isNotNull(subGenTable)) {
             importList.add("java.util.List");
         }
         for (GenTableColumn column : columns) {
-            if (!column.isSuperColumn() && GenConstants.TYPE_DATE.equals(column.getJavaType())) {
+            if (column.isSuperColumn() && GenConstants.TYPE_DATE.equals(column.getJavaType())) {
                 importList.add("java.util.Date");
                 importList.add("com.fasterxml.jackson.annotation.JsonFormat");
-            } else if (!column.isSuperColumn() && GenConstants.TYPE_BIGDECIMAL.equals(column.getJavaType())) {
+            } else if (column.isSuperColumn() && GenConstants.TYPE_BIGDECIMAL.equals(column.getJavaType())) {
                 importList.add("java.math.BigDecimal");
             }
         }
@@ -245,7 +245,7 @@ public class VelocityUtils {
      */
     public static String getDicts(GenTable genTable) {
         List<GenTableColumn> columns = genTable.getColumns();
-        Set<String> dicts = new HashSet<String>();
+        Set<String> dicts = new HashSet<>();
         addDicts(dicts, columns);
         if (StringUtils.isNotNull(genTable.getSubTable())) {
             List<GenTableColumn> subColumns = genTable.getSubTable().getColumns();
@@ -262,7 +262,7 @@ public class VelocityUtils {
      */
     public static void addDicts(Set<String> dicts, List<GenTableColumn> columns) {
         for (GenTableColumn column : columns) {
-            if (!column.isSuperColumn() && StringUtils.isNotEmpty(column.getDictType()) && StringUtils.equalsAny(
+            if (column.isSuperColumn() && StringUtils.isNotEmpty(column.getDictType()) && StringUtils.equalsAny(
                     column.getHtmlType(),
                     new String[]{GenConstants.HTML_SELECT, GenConstants.HTML_RADIO, GenConstants.HTML_CHECKBOX})) {
                 dicts.add("'" + column.getDictType() + "'");

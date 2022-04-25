@@ -149,6 +149,87 @@ public class GenTableColumn extends BaseEntity {
         this.columnComment = columnComment;
     }
 
+    public String getCapJavaField() {
+        return StringUtils.capitalize(javaField);
+    }
+
+    public boolean isPk(String isPk) {
+        return isPk != null && StringUtils.equals("1", isPk);
+    }
+
+    public boolean isPk()
+    {
+        return isPk(this.isPk);
+    }
+    public boolean isIncrement() {
+        return isIncrement(this.isIncrement);
+    }
+
+    public boolean isIncrement(String isIncrement) {
+        return isIncrement != null && StringUtils.equals("1", isIncrement);
+    }
+
+    public boolean isRequired() {
+        return isRequired(this.isRequired);
+    }
+
+    public boolean isRequired(String isRequired) {
+        return isRequired != null && StringUtils.equals("1", isRequired);
+    }
+
+    public boolean isInsert() {
+        return isInsert(this.isInsert);
+    }
+
+    public boolean isInsert(String isInsert) {
+        return isInsert != null && StringUtils.equals("1", isInsert);
+    }
+
+    public boolean isEdit() {
+        return isInsert(this.isEdit);
+    }
+
+    public boolean isEdit(String isEdit) {
+        return isEdit != null && StringUtils.equals("1", isEdit);
+    }
+
+    public boolean isList() {
+        return isList(this.isList);
+    }
+
+    public boolean isList(String isList) {
+        return isList != null && StringUtils.equals("1", isList);
+    }
+
+    public boolean isQuery(String isQuery) {
+        return isQuery != null && StringUtils.equals("1", isQuery);
+    }
+
+    public boolean isSuperColumn() {
+        return !isSuperColumn(this.javaField);
+    }
+
+    public boolean isUsableColumn() {
+        return isUsableColumn(javaField);
+    }
+
+    public String readConverterExp() {
+        String remarks = StringUtils.substringBetween(this.columnComment, "（", "）");
+        StringBuilder sb = new StringBuilder();
+        if (StringUtils.isNotEmpty(remarks)) {
+            for (String value : remarks.split(StringUtils.BLANK_SPACE)) {
+                if (StringUtils.isNotEmpty(value)) {
+                    Object startStr = value.subSequence(0, 1);
+                    String endStr = value.substring(1);
+                    sb.append(startStr).append("=").append(endStr).append(",");
+                }
+            }
+            return sb.deleteCharAt(sb.length() - 1).toString();
+        } else {
+            return this.columnComment;
+        }
+    }
+
     public String getColumnType() {
         return columnType;
     }
@@ -173,24 +254,12 @@ public class GenTableColumn extends BaseEntity {
         this.javaField = javaField;
     }
 
-    public String getCapJavaField() {
-        return StringUtils.capitalize(javaField);
-    }
-
     public String getIsPk() {
         return isPk;
     }
 
     public void setIsPk(String isPk) {
         this.isPk = isPk;
-    }
-
-    public boolean isPk() {
-        return isPk(this.isPk);
-    }
-
-    public boolean isPk(String isPk) {
-        return isPk != null && StringUtils.equals("1", isPk);
     }
 
     public String getIsIncrement() {
@@ -201,28 +270,12 @@ public class GenTableColumn extends BaseEntity {
         this.isIncrement = isIncrement;
     }
 
-    public boolean isIncrement() {
-        return isIncrement(this.isIncrement);
-    }
-
-    public boolean isIncrement(String isIncrement) {
-        return isIncrement != null && StringUtils.equals("1", isIncrement);
-    }
-
     public String getIsRequired() {
         return isRequired;
     }
 
     public void setIsRequired(String isRequired) {
         this.isRequired = isRequired;
-    }
-
-    public boolean isRequired() {
-        return isRequired(this.isRequired);
-    }
-
-    public boolean isRequired(String isRequired) {
-        return isRequired != null && StringUtils.equals("1", isRequired);
     }
 
     public String getIsInsert() {
@@ -233,28 +286,12 @@ public class GenTableColumn extends BaseEntity {
         this.isInsert = isInsert;
     }
 
-    public boolean isInsert() {
-        return isInsert(this.isInsert);
-    }
-
-    public boolean isInsert(String isInsert) {
-        return isInsert != null && StringUtils.equals("1", isInsert);
-    }
-
     public String getIsEdit() {
         return isEdit;
     }
 
     public void setIsEdit(String isEdit) {
         this.isEdit = isEdit;
-    }
-
-    public boolean isEdit() {
-        return isInsert(this.isEdit);
-    }
-
-    public boolean isEdit(String isEdit) {
-        return isEdit != null && StringUtils.equals("1", isEdit);
     }
 
     public String getIsList() {
@@ -265,28 +302,12 @@ public class GenTableColumn extends BaseEntity {
         this.isList = isList;
     }
 
-    public boolean isList() {
-        return isList(this.isList);
-    }
-
-    public boolean isList(String isList) {
-        return isList != null && StringUtils.equals("1", isList);
-    }
-
     public String getIsQuery() {
         return isQuery;
     }
 
     public void setIsQuery(String isQuery) {
         this.isQuery = isQuery;
-    }
-
-    public boolean isQuery() {
-        return isQuery(this.isQuery);
-    }
-
-    public boolean isQuery(String isQuery) {
-        return isQuery != null && StringUtils.equals("1", isQuery);
     }
 
     public String getQueryType() {
@@ -319,30 +340,5 @@ public class GenTableColumn extends BaseEntity {
 
     public void setSort(Integer sort) {
         this.sort = sort;
-    }
-
-    public boolean isSuperColumn() {
-        return isSuperColumn(this.javaField);
-    }
-
-    public boolean isUsableColumn() {
-        return isUsableColumn(javaField);
-    }
-
-    public String readConverterExp() {
-        String remarks = StringUtils.substringBetween(this.columnComment, "（", "）");
-        StringBuffer sb = new StringBuffer();
-        if (StringUtils.isNotEmpty(remarks)) {
-            for (String value : remarks.split(StringUtils.BLANK_SPACE)) {
-                if (StringUtils.isNotEmpty(value)) {
-                    Object startStr = value.subSequence(0, 1);
-                    String endStr = value.substring(1);
-                    sb.append(startStr).append("=").append(endStr).append(",");
-                }
-            }
-            return sb.deleteCharAt(sb.length() - 1).toString();
-        } else {
-            return this.columnComment;
-        }
     }
 }

@@ -2,8 +2,8 @@ package com.ruoyi.file.service;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,22 +14,21 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ruoyi
  */
 @Service
+@RequiredArgsConstructor
 public class FastDfsSysFileServiceImpl implements ISysFileService {
     /**
      * 域名或本机访问地址
      */
     @Value("${fdfs.domain}")
     public String domain;
-
-    @Autowired
-    private FastFileStorageClient storageClient;
+    private final FastFileStorageClient storageClient;
 
     /**
      * FastDfs文件上传接口
      *
      * @param file 上传的文件
      * @return 访问地址
-     * @throws Exception
+     * @throws Exception /
      */
     @Override
     public String uploadFile(MultipartFile file) throws Exception {

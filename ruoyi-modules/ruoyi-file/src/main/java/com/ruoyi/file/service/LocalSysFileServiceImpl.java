@@ -37,12 +37,11 @@ public class LocalSysFileServiceImpl implements ISysFileService {
      *
      * @param file 上传的文件
      * @return 访问地址
-     * @throws Exception
+     * @throws Exception \
      */
     @Override
     public String uploadFile(MultipartFile file) throws Exception {
         String name = FileUploadUtils.upload(localFilePath, file);
-        String url = domain + localFilePrefix + name;
-        return url;
+        return domain + localFilePrefix + name;
     }
 }

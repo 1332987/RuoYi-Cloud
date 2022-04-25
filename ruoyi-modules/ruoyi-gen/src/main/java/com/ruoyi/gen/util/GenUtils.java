@@ -161,7 +161,7 @@ public class GenUtils {
      *
      * @param replacementm 替换值
      * @param searchList   替换列表
-     * @return
+     * @return /
      */
     public static String replaceFirst(String replacementm, String[] searchList) {
         String text = replacementm;
