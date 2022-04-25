@@ -10,7 +10,7 @@ import com.ruoyi.common.security.auth.AuthUtil;
 import com.ruoyi.common.security.service.TokenService;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.model.LoginUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,12 +24,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author ruoyi
  */
 @RestController
+@RequiredArgsConstructor
 public class TokenController {
-    @Autowired
-    private TokenService tokenService;
-
-    @Autowired
-    private SysLoginService sysLoginService;
+    private final TokenService tokenService;
+    private final SysLoginService sysLoginService;
 
     @PostMapping("login")
     public Rust<?> login(@RequestBody LoginBody form) {

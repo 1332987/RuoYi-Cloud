@@ -60,7 +60,7 @@ public class SysLoginService {
             throw new ServiceException(userResult.getMsg());
         }
 
-        if (StringUtils.isNull(userResult) || StringUtils.isNull(userResult.getData())) {
+        if (StringUtils.isNull(userResult.getData())) {
             recordLogininfor(username, Constants.LOGIN_FAIL, "登录用户不存在");
             throw new ServiceException("登录用户：" + username + " 不存在");
         }
@@ -122,7 +122,6 @@ public class SysLoginService {
      * @param username 用户名
      * @param status   状态
      * @param message  消息内容
-     * @return
      */
     public void recordLogininfor(String username, String status, String message) {
         SysLogininfor logininfor = new SysLogininfor();
