@@ -28,14 +28,14 @@
         <tobato.version>1.27.2</tobato.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
-        <druid.version>1.2.8</druid.version>
+        <druid.version>1.2.9</druid.version>
         <dynamic-ds.version>3.5.1</dynamic-ds.version>
         <commons.io.version>2.11.0</commons.io.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>
         <velocity.version>2.3</velocity.version>
         <fastjson.version>1.2.80</fastjson.version>
         <jjwt.version>0.9.1</jjwt.version>
-        <minio.version>8.3.7</minio.version>
+        <minio.version>8.3.8</minio.version>
         <poi.version>4.1.2</poi.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <transmittable-thread-local.version>2.12.2</transmittable-thread-local.version>
