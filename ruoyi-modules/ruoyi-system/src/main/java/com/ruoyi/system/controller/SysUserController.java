@@ -83,7 +83,7 @@ public class SysUserController extends BaseController {
     }
 
     @PostMapping("/importTemplate")
-    public void importTemplate(HttpServletResponse response) throws IOException {
+    public void importTemplate(HttpServletResponse response) {
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         util.importTemplateExcel(response, "用户数据");
     }

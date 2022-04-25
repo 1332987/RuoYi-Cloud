@@ -71,7 +71,7 @@ public final class Base64 {
     }
 
     private static boolean isData(char octect) {
-        return (octect < BASELENGTH && BASE_64_ALPHABET[octect] != -1);
+        return (octect >= BASELENGTH || BASE_64_ALPHABET[octect] == -1);
     }
 
     /**
@@ -173,8 +173,8 @@ public final class Base64 {
         int dataIndex = 0;
         decodedData = new byte[(numberQuadruple) * 3];
         for (; i < numberQuadruple - 1; i++) {
-            if (!isData((d1 = base64Data[dataIndex++])) || !isData((d2 = base64Data[dataIndex++]))
-                    || !isData((d3 = base64Data[dataIndex++])) || !isData((d4 = base64Data[dataIndex++]))) {
+            if (isData((d1 = base64Data[dataIndex++])) || isData((d2 = base64Data[dataIndex++]))
+                    || isData((d3 = base64Data[dataIndex++])) || isData((d4 = base64Data[dataIndex++]))) {
                 return null;
             }
             b1 = BASE_64_ALPHABET[d1];
@@ -185,14 +185,14 @@ public final class Base64 {
             decodedData[encodedIndex++] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
             decodedData[encodedIndex++] = (byte) (b3 << 6 | b4);
         }
-        if (!isData((d1 = base64Data[dataIndex++])) || !isData((d2 = base64Data[dataIndex++]))) {
+        if (isData((d1 = base64Data[dataIndex++])) || isData((d2 = base64Data[dataIndex++]))) {
             return null;
         }
         b1 = BASE_64_ALPHABET[d1];
         b2 = BASE_64_ALPHABET[d2];
         d3 = base64Data[dataIndex++];
         d4 = base64Data[dataIndex++];
-        if (!isData((d3)) || !isData((d4))) {
+        if (isData((d3)) || isData((d4))) {
             if (isPad(d3) && isPad(d4)) {
                 int i1 = 0xf;
                 if ((b2 & i1) != 0) {

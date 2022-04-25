@@ -276,9 +276,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      */
     private List<SysDept> getChildList(List<SysDept> list, SysDept t) {
         List<SysDept> tlist = new ArrayList<SysDept>();
-        Iterator<SysDept> it = list.iterator();
-        while (it.hasNext()) {
-            SysDept n = (SysDept) it.next();
+        for (SysDept n : list) {
             if (StringUtils.isNotNull(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue()) {
                 tlist.add(n);
             }

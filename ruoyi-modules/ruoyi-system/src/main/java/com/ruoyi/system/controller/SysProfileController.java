@@ -18,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 /**
  * 个人信息 业务处理
  *
@@ -110,7 +108,7 @@ public class SysProfileController extends BaseController {
      */
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
-    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws IOException {
+    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) {
         if (!file.isEmpty()) {
             LoginUser loginUser = SecurityUtils.getLoginUser();
             Rust<SysFile> fileResult = remoteFileService.upload(file);

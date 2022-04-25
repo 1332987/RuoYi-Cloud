@@ -96,7 +96,7 @@ public class DataScopeAspect {
     }
 
     @Before("@annotation(controllerDataScope)")
-    public void doBefore(JoinPoint point, DataScope controllerDataScope) throws Throwable {
+    public void doBefore(JoinPoint point, DataScope controllerDataScope) {
         clearDataScope(point);
         handleDataScope(point, controllerDataScope);
     }
