@@ -1,19 +1,18 @@
 package com.ruoyi.common.core.annotation;
 
 import com.ruoyi.common.core.utils.poi.ExcelHandlerAdapter;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.math.BigDecimal;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import com.ruoyi.common.core.utils.poi.ExcelHandlerAdapter;
 
 /**
  * 自定义导出Excel数据注解
- * 
+ *
  * @author ruoyi
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -129,9 +128,19 @@ public @interface Excel {
      */
     Type type() default Type.ALL;
 
-    public enum Type
-    {
-        ALL(0), EXPORT(1), IMPORT(2);
+    public enum Type {
+        /**
+         * 导出导入
+         */
+        ALL(0),
+        /**
+         * 仅导出
+         */
+        EXPORT(1),
+        /**
+         * 仅导入
+         */
+        IMPORT(2);
         private final int value;
 
         Type(int value) {
