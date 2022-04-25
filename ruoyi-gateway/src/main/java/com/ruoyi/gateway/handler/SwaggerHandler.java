@@ -18,14 +18,14 @@ import java.util.Optional;
 @RequestMapping("/swagger-resources")
 public class SwaggerHandler {
     private final SwaggerResourcesProvider swaggerResources;
-    @Autowired(required = false)
-    private SecurityConfiguration securityConfiguration;
-    @Autowired(required = false)
-    private UiConfiguration uiConfiguration;
+    private final SecurityConfiguration securityConfiguration;
+    private final UiConfiguration uiConfiguration;
 
-    @Autowired
-    public SwaggerHandler(SwaggerResourcesProvider swaggerResources) {
+
+    public SwaggerHandler(@Autowired SwaggerResourcesProvider swaggerResources,@Autowired(required = false) SecurityConfiguration securityConfiguration,@Autowired(required = false) UiConfiguration uiConfiguration) {
         this.swaggerResources = swaggerResources;
+        this.securityConfiguration = securityConfiguration;
+        this.uiConfiguration = uiConfiguration;
     }
 
     @GetMapping("/configuration/security")
@@ -41,9 +41,8 @@ public class SwaggerHandler {
                 Optional.ofNullable(uiConfiguration).orElse(UiConfigurationBuilder.builder().build()), HttpStatus.OK));
     }
 
-    @SuppressWarnings("rawtypes")
     @GetMapping("")
-    public Mono<ResponseEntity> swaggerResources() {
+    public Mono<ResponseEntity<?>> swaggerResources() {
         return Mono.just((new ResponseEntity<>(swaggerResources.get(), HttpStatus.OK)));
     }
 }

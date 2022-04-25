@@ -1,5 +1,6 @@
 package com.ruoyi.gateway.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Component
+@RequiredArgsConstructor
 public class SwaggerProvider implements SwaggerResourcesProvider, WebFluxConfigurer {
     /**
      * Swagger2默认的url后缀
@@ -27,16 +29,14 @@ public class SwaggerProvider implements SwaggerResourcesProvider, WebFluxConfigu
     /**
      * 网关路由
      */
-    @Autowired
-    private RouteLocator routeLocator;
+    private final RouteLocator routeLocator;
 
-    @Autowired
-    private GatewayProperties gatewayProperties;
+    private final GatewayProperties gatewayProperties;
 
     /**
      * 聚合其他服务接口
      *
-     * @return
+     * @return /
      */
     @Override
     public List<SwaggerResource> get() {
@@ -66,7 +66,6 @@ public class SwaggerProvider implements SwaggerResourcesProvider, WebFluxConfigu
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /** swagger-ui 地址 */
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
     }

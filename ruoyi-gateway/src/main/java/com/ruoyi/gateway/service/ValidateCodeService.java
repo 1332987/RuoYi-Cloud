@@ -3,8 +3,6 @@ package com.ruoyi.gateway.service;
 import com.ruoyi.common.core.exception.CaptchaException;
 import com.ruoyi.common.core.web.domain.AjaxResult;
 
-import java.io.IOException;
-
 /**
  * 验证码处理
  *
@@ -15,10 +13,9 @@ public interface ValidateCodeService {
      * 生成验证码
      *
      * @return AjaxResult
-     * @throws IOException      /
      * @throws CaptchaException /
      */
-    public AjaxResult createCaptcha() throws CaptchaException;
+    AjaxResult createCaptcha() throws CaptchaException;
 
     /**
      * 校验验证码
@@ -27,5 +24,5 @@ public interface ValidateCodeService {
      * @param value 值
      * @throws CaptchaException /
      */
-    public void checkCaptcha(String key, String value) throws CaptchaException;
+    void checkCaptcha(String key, String value) throws CaptchaException;
 }

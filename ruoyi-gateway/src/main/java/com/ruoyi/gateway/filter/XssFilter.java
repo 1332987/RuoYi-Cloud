@@ -4,7 +4,8 @@ import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.utils.html.EscapeUtil;
 import com.ruoyi.gateway.config.properties.XssProperties;
 import io.netty.buffer.ByteBufAllocator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -28,13 +29,13 @@ import java.nio.charset.StandardCharsets;
  * @author ruoyi
  */
 @Component
+@RequiredArgsConstructor
 @ConditionalOnProperty(value = "security.xss.enabled", havingValue = "true")
 public class XssFilter implements GlobalFilter, Ordered {
     /**
      * 跨站脚本的 xss 配置，nacos自行添加
      */
-    @Autowired
-    private XssProperties xss;
+    private final XssProperties xss;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -59,7 +60,8 @@ public class XssFilter implements GlobalFilter, Ordered {
     }
 
     private ServerHttpRequestDecorator requestDecorator(ServerWebExchange exchange) {
-        ServerHttpRequestDecorator serverHttpRequestDecorator = new ServerHttpRequestDecorator(exchange.getRequest()) {
+        return new ServerHttpRequestDecorator(exchange.getRequest()) {
+            @NonNull
             @Override
             public Flux<DataBuffer> getBody() {
                 Flux<DataBuffer> body = super.getBody();
@@ -82,6 +84,7 @@ public class XssFilter implements GlobalFilter, Ordered {
             }
 
             @Override
+            @NonNull
             public HttpHeaders getHeaders() {
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.putAll(super.getHeaders());
@@ -92,7 +95,6 @@ public class XssFilter implements GlobalFilter, Ordered {
             }
 
         };
-        return serverHttpRequestDecorator;
     }
 
     /**

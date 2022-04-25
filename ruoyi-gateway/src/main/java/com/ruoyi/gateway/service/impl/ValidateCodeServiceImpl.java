@@ -10,11 +10,10 @@ import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.common.redis.service.RedisService;
 import com.ruoyi.gateway.config.properties.CaptchaProperties;
 import com.ruoyi.gateway.service.ValidateCodeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FastByteArrayOutputStream;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -26,18 +25,12 @@ import java.util.concurrent.TimeUnit;
  * @author ruoyi
  */
 @Service
+@RequiredArgsConstructor
 public class ValidateCodeServiceImpl implements ValidateCodeService {
-    @Resource(name = "captchaProducer")
-    private Producer captchaProducer;
-
-    @Resource(name = "captchaProducerMath")
-    private Producer captchaProducerMath;
-
-    @Autowired
-    private RedisService redisService;
-
-    @Autowired
-    private CaptchaProperties captchaProperties;
+    private final Producer captchaProducer;
+    private final Producer captchaProducerMath;
+    private final RedisService redisService;
+    private final CaptchaProperties captchaProperties;
 
     /**
      * 生成验证码
@@ -55,7 +48,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
         String uuid = IdUtils.simpleuuid();
         String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
 
-        String capStr = null, code = null;
+        String capStr, code = null;
         BufferedImage image = null;
 
         String captchaType = captchaProperties.getType();
@@ -74,6 +67,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
+            assert image != null;
             ImageIO.write(image, "jpg", os);
         } catch (IOException e) {
             return AjaxResult.error(e.getMessage());

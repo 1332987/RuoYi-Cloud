@@ -1,7 +1,7 @@
 package com.ruoyi.gateway.config;
 
 import com.ruoyi.gateway.handler.ValidateCodeHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -15,9 +15,9 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
  * @author ruoyi
  */
 @Configuration
+@RequiredArgsConstructor
 public class RouterFunctionConfiguration {
-    @Autowired
-    private ValidateCodeHandler validateCodeHandler;
+    private final ValidateCodeHandler validateCodeHandler;
 
     @SuppressWarnings("rawtypes")
     @Bean

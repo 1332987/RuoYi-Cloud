@@ -10,6 +10,7 @@ import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.redis.service.RedisService;
 import com.ruoyi.gateway.config.properties.IgnoreWhiteProperties;
 import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,16 @@ import reactor.core.publisher.Mono;
  * @author ruoyi
  */
 @Component
+@RequiredArgsConstructor
 public class AuthFilter implements GlobalFilter, Ordered {
     private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
     /**
      * 排除过滤的 uri 地址，nacos自行添加
      */
-    @Autowired
-    private IgnoreWhiteProperties ignoreWhite;
+    private final IgnoreWhiteProperties ignoreWhite;
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
 
 
     @Override
@@ -74,7 +74,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         addHeader(mutate, SecurityConstants.DETAILS_USER_ID, userid);
         addHeader(mutate, SecurityConstants.DETAILS_USERNAME, username);
         // 内部请求来源参数清除
-        removeHeader(mutate, SecurityConstants.FROM_SOURCE);
+        removeHeader(mutate);
         return chain.filter(exchange.mutate().request(mutate.build()).build());
     }
 
@@ -87,8 +87,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
         mutate.header(name, valueEncode);
     }
 
-    private void removeHeader(ServerHttpRequest.Builder mutate, String name) {
-        mutate.headers(httpHeaders -> httpHeaders.remove(name)).build();
+    private void removeHeader(ServerHttpRequest.Builder mutate) {
+        mutate.headers(httpHeaders -> httpHeaders.remove(SecurityConstants.FROM_SOURCE)).build();
     }
 
     private Mono<Void> unauthorizedResponse(ServerWebExchange exchange, String msg) {
@@ -109,8 +109,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private String getToken(ServerHttpRequest request) {
         String token = request.getHeaders().getFirst(TokenConstants.AUTHENTICATION);
         // 如果前端设置了令牌前缀，则裁剪掉前缀
-        if (StringUtils.isNotEmpty(token) && token.startsWith(TokenConstants.PREFIX)) {
-            token = token.replaceFirst(TokenConstants.PREFIX, StringUtils.EMPTY);
+        if (StringUtils.isNotEmpty(token)) {
+            assert token != null;
+            if (token.startsWith(TokenConstants.PREFIX)) {
+                token = token.replaceFirst(TokenConstants.PREFIX, StringUtils.EMPTY);
+            }
         }
         return token;
     }

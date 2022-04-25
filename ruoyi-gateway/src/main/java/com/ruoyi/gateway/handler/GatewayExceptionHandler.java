@@ -1,6 +1,7 @@
 package com.ruoyi.gateway.handler;
 
 import com.ruoyi.common.core.utils.ServletUtils;
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
@@ -22,8 +23,9 @@ import reactor.core.publisher.Mono;
 public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GatewayExceptionHandler.class);
 
+    @NonNull
     @Override
-    public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+    public Mono<Void> handle(ServerWebExchange exchange, @NonNull Throwable ex) {
         ServerHttpResponse response = exchange.getResponse();
 
         if (exchange.getResponse().isCommitted()) {

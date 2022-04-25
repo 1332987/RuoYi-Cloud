@@ -5,7 +5,7 @@ import com.ruoyi.common.core.utils.ServletUtils;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.gateway.config.properties.CaptchaProperties;
 import com.ruoyi.gateway.service.ValidateCodeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -24,14 +24,13 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author ruoyi
  */
 @Component
+@RequiredArgsConstructor
 public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
     private final static String[] VALIDATE_URL = new String[]{"/auth/login", "/auth/register"};
     private static final String CODE = "code";
     private static final String UUID = "uuid";
-    @Autowired
-    private ValidateCodeService validateCodeService;
-    @Autowired
-    private CaptchaProperties captchaProperties;
+    private final ValidateCodeService validateCodeService;
+    private final CaptchaProperties captchaProperties;
 
     @Override
     public GatewayFilter apply(Object config) {

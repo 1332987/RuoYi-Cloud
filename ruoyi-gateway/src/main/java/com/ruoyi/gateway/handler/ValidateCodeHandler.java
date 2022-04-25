@@ -3,6 +3,7 @@ package com.ruoyi.gateway.handler;
 import com.ruoyi.common.core.exception.CaptchaException;
 import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.gateway.service.ValidateCodeService;
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -23,8 +24,9 @@ public class ValidateCodeHandler implements HandlerFunction<ServerResponse> {
     @Resource
     private ValidateCodeService validateCodeService;
 
+    @NonNull
     @Override
-    public Mono<ServerResponse> handle(ServerRequest serverRequest) {
+    public Mono<ServerResponse> handle(@NonNull ServerRequest serverRequest) {
         AjaxResult ajax;
         try {
             ajax = validateCodeService.createCaptcha();

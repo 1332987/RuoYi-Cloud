@@ -1,6 +1,9 @@
 package com.ruoyi.gateway.filter;
 
 import com.ruoyi.common.core.utils.StringUtils;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
@@ -64,13 +67,12 @@ public class CacheRequestFilter extends AbstractGatewayFilterFactory<CacheReques
                 return bytes;
             }).defaultIfEmpty(new byte[0]).flatMap(bytes -> {
                 DataBufferFactory dataBufferFactory = exchange.getResponse().bufferFactory();
+                Flux<DataBuffer> just = bytes.length > 0 ? Flux.just(dataBufferFactory.wrap(bytes)) : Flux.empty();
                 ServerHttpRequestDecorator decorator = new ServerHttpRequestDecorator(exchange.getRequest()) {
                     @Override
+                    @NonNull
                     public Flux<DataBuffer> getBody() {
-                        if (bytes.length > 0) {
-                            return Flux.just(dataBufferFactory.wrap(bytes));
-                        }
-                        return Flux.empty();
+                        return just;
                     }
                 };
                 return chain.filter(exchange.mutate().request(decorator).build());
@@ -78,15 +80,9 @@ public class CacheRequestFilter extends AbstractGatewayFilterFactory<CacheReques
         }
     }
 
+    @Setter
+    @Getter
     static class Config {
         private Integer order;
-
-        public Integer getOrder() {
-            return order;
-        }
-
-        public void setOrder(Integer order) {
-            this.order = order;
-        }
     }
 }
