@@ -15,8 +15,8 @@ import com.ruoyi.job.domain.SysJob;
 import com.ruoyi.job.service.ISysJobService;
 import com.ruoyi.job.util.CronUtils;
 import com.ruoyi.job.util.ScheduleUtils;
+import lombok.RequiredArgsConstructor;
 import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,9 +29,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/job")
+@RequiredArgsConstructor
 public class SysJobController extends BaseController {
-    @Autowired
-    private ISysJobService jobService;
+    private final ISysJobService jobService;
 
     /**
      * 查询定时任务列表
@@ -52,7 +52,7 @@ public class SysJobController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJob sysJob) {
         List<SysJob> list = jobService.selectJobList(sysJob);
-        ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
+        ExcelUtil<SysJob> util = new ExcelUtil<>(SysJob.class);
         util.exportExcel(response, list, "定时任务");
     }
 

@@ -34,9 +34,7 @@ public abstract class AbstractQuartzJob implements Job {
         BeanUtils.copyBeanProp(sysJob, context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES));
         try {
             before(context, sysJob);
-            if (sysJob != null) {
-                doExecute(context, sysJob);
-            }
+            doExecute(context, sysJob);
             after(context, sysJob, null);
         } catch (Exception e) {
             log.error("任务执行异常  - ：", e);
@@ -51,6 +49,8 @@ public abstract class AbstractQuartzJob implements Job {
      * @param sysJob  系统计划任务
      */
     protected void before(JobExecutionContext context, SysJob sysJob) {
+        System.err.println(context);
+        System.err.println(sysJob);
         THREAD_LOCAL.set(new Date());
     }
 
@@ -61,6 +61,7 @@ public abstract class AbstractQuartzJob implements Job {
      * @param sysJob  系统计划任务
      */
     protected void after(JobExecutionContext context, SysJob sysJob, Exception e) {
+        System.err.println(context);
         Date startTime = THREAD_LOCAL.get();
         THREAD_LOCAL.remove();
 

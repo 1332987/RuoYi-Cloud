@@ -9,7 +9,7 @@ import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.annotation.RequiresPermissions;
 import com.ruoyi.job.domain.SysJobLog;
 import com.ruoyi.job.service.ISysJobLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +22,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/job/log")
+@RequiredArgsConstructor
 public class SysJobLogController extends BaseController {
-    @Autowired
-    private ISysJobLogService jobLogService;
+    private final ISysJobLogService jobLogService;
 
     /**
      * 查询定时任务调度日志列表
@@ -45,7 +45,7 @@ public class SysJobLogController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJobLog sysJobLog) {
         List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
-        ExcelUtil<SysJobLog> util = new ExcelUtil<SysJobLog>(SysJobLog.class);
+        ExcelUtil<SysJobLog> util = new ExcelUtil<>(SysJobLog.class);
         util.exportExcel(response, list, "调度日志");
     }
 
