@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.support.NameUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,6 @@ import java.util.List;
  * @author ruoyi
  */
 @Component
-@RequiredArgsConstructor
 public class SwaggerProvider implements SwaggerResourcesProvider, WebFluxConfigurer {
     /**
      * Swagger2默认的url后缀
@@ -28,9 +29,10 @@ public class SwaggerProvider implements SwaggerResourcesProvider, WebFluxConfigu
     /**
      * 网关路由
      */
-    private final RouteLocator routeLocator;
-
-    private final GatewayProperties gatewayProperties;
+    @Resource
+    private RouteLocator routeLocator;
+    @Resource
+    private GatewayProperties gatewayProperties;
 
     /**
      * 聚合其他服务接口
