@@ -24,8 +24,6 @@ public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T> {
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
     }
 
-    @SuppressWarnings("unused")
-    private ObjectMapper objectMapper = new ObjectMapper();
     private Class<T> clazz;
 
     public FastJson2JsonRedisSerializer(Class<T> clazz) {
@@ -53,7 +51,6 @@ public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T> {
 
     public void setObjectMapper(ObjectMapper objectMapper) {
         Assert.notNull(objectMapper, "'objectMapper' must not be null");
-        this.objectMapper = objectMapper;
     }
 
     protected JavaType getJavaType(Class<?> clazz) {

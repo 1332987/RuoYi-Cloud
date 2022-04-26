@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -130,7 +129,7 @@ public class ExcelUtil<T> {
             if (StringUtils.containsAny(separator, propertyValue)) {
                 for (String value : propertyValue.split(separator)) {
                     if (itemArray[0].equals(value)) {
-                        propertyString.append(itemArray[1] + separator);
+                        propertyString.append(itemArray[1]).append(separator);
                         break;
                     }
                 }
@@ -159,7 +158,7 @@ public class ExcelUtil<T> {
             if (StringUtils.containsAny(separator, propertyValue)) {
                 for (String value : propertyValue.split(separator)) {
                     if (itemArray[1].equals(value)) {
-                        propertyString.append(itemArray[0] + separator);
+                        propertyString.append(itemArray[0]).append(separator);
                         break;
                     }
                 }
@@ -446,7 +445,7 @@ public class ExcelUtil<T> {
                 this.createCell(excel, row, column++);
             }
             if (Type.EXPORT.equals(type)) {
-                fillExcelData(index, row);
+                fillExcelData(index);
                 addStatisticsRow();
             }
         }
@@ -454,17 +453,16 @@ public class ExcelUtil<T> {
 
     /**
      * 填充excel数据
+     *  @param index 序号
      *
-     * @param index 序号
-     * @param row   单元格行
      */
-    public void fillExcelData(int index, Row row) {
+    public void fillExcelData(int index) {
         int startNo = index * SHEET_SIZE;
         int endNo = Math.min(startNo + SHEET_SIZE, list.size());
         for (int i = startNo; i < endNo; i++) {
-            row = sheet.createRow(i + 1 + rownum - startNo);
+            Row row = sheet.createRow(i + 1 + rownum - startNo);
             // 得到导出对象.
-            T vo = (T) list.get(i);
+            T vo = list.get(i);
             int column = 0;
             for (Object[] os : fields) {
                 Field field = (Field) os[0];
@@ -649,12 +647,11 @@ public class ExcelUtil<T> {
 
     /**
      * 设置单元格样式
-     * 
-     * @param cell 单元格
+     *
+     * @param cell  单元格
      * @param excel 注解信息
      */
-    public void setDataCell(Cell cell, Excel excel)
-    {
+    public void setDataCell(Cell cell, Excel excel) {
         CellStyle style = wb.createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -720,8 +717,8 @@ public class ExcelUtil<T> {
             Method formatMethod = excel.handler().getMethod("format", Object.class, String[].class);
             value = formatMethod.invoke(instance, value, excel.args());
         } catch (Exception e) {
-            log.info("不能格式化数据 {}" ,excel.handler());
-            log.error("不能格式化数据 " , e);
+            log.info("不能格式化数据 {}", excel.handler());
+            log.error("不能格式化数据 ", e);
         }
         return Convert.toStr(value);
     }
@@ -738,7 +735,7 @@ public class ExcelUtil<T> {
             try {
                 temp = Double.valueOf(text);
             } catch (NumberFormatException e) {
-                log.error("NumberFormatException ",e);
+                log.error("NumberFormatException ", e);
             }
             statistics.put(index, statistics.get(index) + temp);
         }

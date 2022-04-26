@@ -58,8 +58,8 @@ public final class Base64 {
         for (int i = i4, j = 0; i <= i5; i++, j++) {
             LOOK_UP_BASE_64_ALPHABET[i] = (char) ('0' + j);
         }
-        LOOK_UP_BASE_64_ALPHABET[62] = (char) '+';
-        LOOK_UP_BASE_64_ALPHABET[63] = (char) '/';
+        LOOK_UP_BASE_64_ALPHABET[62] = '+';
+        LOOK_UP_BASE_64_ALPHABET[63] = '/';
     }
 
     private static boolean isWhiteSpace(char octect) {

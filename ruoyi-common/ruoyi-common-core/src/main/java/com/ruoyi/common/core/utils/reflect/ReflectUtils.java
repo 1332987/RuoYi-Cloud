@@ -183,7 +183,7 @@ public class ReflectUtils {
                 makeAccessible(field);
                 return field;
             } catch (NoSuchFieldException e) {
-                continue;
+                System.err.println(e.getMessage());
             }
         }
         return null;
@@ -208,7 +208,7 @@ public class ReflectUtils {
                 makeAccessible(method);
                 return method;
             } catch (NoSuchMethodException e) {
-                continue;
+                System.err.println(e.getMessage());
             }
         }
         return null;

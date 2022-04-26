@@ -32,7 +32,7 @@ public class Seq {
     /**
      * 机器标识
      */
-    private static String machineCode = "A";
+    private static final String MACHINE_CODE = "A";
 
     /**
      * 获取通用序列号
@@ -65,7 +65,7 @@ public class Seq {
      */
     public static String getId(AtomicInteger atomicInt, int length) {
         String result = DateUtils.dateTimeNow();
-        result += machineCode;
+        result += MACHINE_CODE;
         result += getSeq(atomicInt, length);
         return result;
     }

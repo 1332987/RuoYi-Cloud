@@ -85,13 +85,8 @@ public class IpUtils {
                     return true;
                 }
             case section5:
-                switch (b1) {
-                    case section6: {
-                        return true;
-                    }
-                    default: {
-                        break;
-                    }
+                if (b1 == section6) {
+                    return true;
                 }
             default: {
                 return false;
@@ -219,7 +214,7 @@ public class IpUtils {
         if (ip != null && ip.indexOf(StringUtils.COMMA) > 0) {
             final String[] ips = ip.trim().split(",");
             for (String subIp : ips) {
-                if (false == isUnknown(subIp)) {
+                if (!isUnknown(subIp)) {
                     ip = subIp;
                     break;
                 }
