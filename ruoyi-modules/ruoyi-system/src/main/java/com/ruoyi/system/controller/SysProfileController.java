@@ -14,7 +14,7 @@ import com.ruoyi.system.api.domain.SysFile;
 import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,15 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/user/profile")
+@RequiredArgsConstructor
 public class SysProfileController extends BaseController {
-    @Autowired
-    private ISysUserService userService;
-
-    @Autowired
-    private TokenService tokenService;
-
-    @Autowired
-    private RemoteFileService remoteFileService;
+    private final ISysUserService userService;
+    private final TokenService tokenService;
+    private final RemoteFileService remoteFileService;
 
     /**
      * 个人信息
@@ -57,9 +53,11 @@ public class SysProfileController extends BaseController {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         SysUser sysUser = loginUser.getSysUser();
         user.setUserName(sysUser.getUserName());
-        if (StringUtils.isNotEmpty(user.getPhonenumber())
-                && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
-            return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
+        if (StringUtils.isNotEmpty(user.getPhonenumber())) {
+            if (StringUtils.isNotEmpty(user.getPhonenumber())
+                    && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+                return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
+            }
         } else if (StringUtils.isNotEmpty(user.getEmail())
                 && UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
             return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");

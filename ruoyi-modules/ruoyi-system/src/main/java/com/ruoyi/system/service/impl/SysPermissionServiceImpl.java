@@ -4,7 +4,7 @@ import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.system.service.ISysPermissionService;
 import com.ruoyi.system.service.ISysRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -14,12 +14,10 @@ import java.util.Set;
  * @author pan
  */
 @Service
+@RequiredArgsConstructor
 public class SysPermissionServiceImpl implements ISysPermissionService {
-    @Autowired
-    private ISysRoleService roleService;
-
-    @Autowired
-    private ISysMenuService menuService;
+    private final ISysRoleService roleService;
+    private final ISysMenuService menuService;
 
     /**
      * 获取角色数据权限
@@ -29,7 +27,7 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
      */
     @Override
     public Set<String> getRolePermission(Long userId) {
-        Set<String> roles = new HashSet<String>();
+        Set<String> roles = new HashSet<>();
         // 管理员拥有所有权限
         if (SysUser.isAdmin(userId)) {
             roles.add("admin");
@@ -47,7 +45,7 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
      */
     @Override
     public Set<String> getMenuPermission(Long userId) {
-        Set<String> perms = new HashSet<String>();
+        Set<String> perms = new HashSet<>();
         // 管理员拥有所有权限
         if (SysUser.isAdmin(userId)) {
             perms.add("*:*:*");

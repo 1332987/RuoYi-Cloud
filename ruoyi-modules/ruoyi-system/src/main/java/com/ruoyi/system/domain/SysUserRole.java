@@ -35,6 +35,14 @@ public class SysUserRole {
         this.roleId = roleId;
     }
 
+    public SysUserRole() {
+    }
+
+    public SysUserRole(Long userId, Long roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)

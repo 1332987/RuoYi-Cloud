@@ -14,7 +14,7 @@ import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.domain.SysUserRole;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +28,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/role")
+@RequiredArgsConstructor
 public class SysRoleController extends BaseController {
-    @Autowired
-    private ISysRoleService roleService;
-
-    @Autowired
-    private ISysUserService userService;
+    private final ISysRoleService roleService;
+    private final ISysUserService userService;
 
     @RequiresPermissions("system:role:list")
     @GetMapping("/list")
@@ -48,7 +46,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysRole role) {
         List<SysRole> list = roleService.selectRoleList(role);
-        ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
+        ExcelUtil<SysRole> util = new ExcelUtil<>(SysRole.class);
         util.exportExcel(response, list, "角色数据");
     }
 
