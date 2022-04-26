@@ -34,7 +34,6 @@ public class SwaggerBeanPostProcessor implements BeanPostProcessor {
         mappings.addAll(copy);
     }
 
-    @SuppressWarnings("unchecked")
     private List<RequestMappingInfoHandlerMapping> getHandlerMappings(Object bean) {
         try {
             Field field = ReflectionUtils.findField(bean.getClass(), "handlerMappings");

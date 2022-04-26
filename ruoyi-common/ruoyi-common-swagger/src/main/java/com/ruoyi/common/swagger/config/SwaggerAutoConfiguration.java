@@ -93,7 +93,7 @@ public class SwaggerAutoConfiguration {
     /**
      * 默认的全局鉴权策略
      *
-     * @return
+     * @return /
      */
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");

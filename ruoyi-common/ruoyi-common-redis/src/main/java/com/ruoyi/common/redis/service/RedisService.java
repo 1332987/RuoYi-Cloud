@@ -1,14 +1,16 @@
 package com.ruoyi.common.redis.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,7 +18,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author ruoyi
  **/
-@SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
 @RequiredArgsConstructor
 public class RedisService {
@@ -101,7 +102,7 @@ public class RedisService {
     /**
      * 删除单个对象
      *
-     * @param key
+     * @param key /
      */
     public boolean deleteObject(final String key) {
         return redisTemplate.delete(key);
@@ -111,7 +112,7 @@ public class RedisService {
      * 删除集合对象
      *
      * @param collection 多个对象
-     * @return
+     * @return /
      */
     public long deleteObject(final Collection collection) {
         return redisTemplate.delete(collection);
@@ -157,8 +158,8 @@ public class RedisService {
     /**
      * 获得缓存的set
      *
-     * @param key
-     * @return
+     * @param key /
+     * @return /
      */
     public <T> Set<T> getCacheSet(final String key) {
         return redisTemplate.opsForSet().members(key);
@@ -167,8 +168,8 @@ public class RedisService {
     /**
      * 缓存Map
      *
-     * @param key
-     * @param dataMap
+     * @param key /
+     * @param dataMap /
      */
     public <T> void setCacheMap(final String key, final Map<String, T> dataMap) {
         if (dataMap != null) {
@@ -179,8 +180,8 @@ public class RedisService {
     /**
      * 获得缓存的Map
      *
-     * @param key
-     * @return
+     * @param key /
+     * @return /
      */
     public <T> Map<String, T> getCacheMap(final String key) {
         return redisTemplate.opsForHash().entries(key);

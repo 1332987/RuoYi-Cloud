@@ -4,7 +4,6 @@ import com.ruoyi.common.core.constant.SecurityConstants;
 import com.ruoyi.system.api.RemoteLogService;
 import com.ruoyi.system.api.domain.SysOperLog;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 

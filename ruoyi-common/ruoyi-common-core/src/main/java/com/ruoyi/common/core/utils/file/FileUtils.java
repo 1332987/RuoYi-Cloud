@@ -32,7 +32,6 @@ public class FileUtils {
      *
      * @param filePath 文件路径
      * @param os       输出流
-     * @return
      */
     public static void writeBytes(String filePath, OutputStream os) throws IOException {
         FileInputStream fis = null;
@@ -69,7 +68,7 @@ public class FileUtils {
      * 删除文件
      *
      * @param filePath 文件
-     * @return
+     * @return /
      */
     public static boolean deleteFile(String filePath) {
         boolean flag = false;
@@ -186,7 +185,6 @@ public class FileUtils {
      *
      * @param response     响应对象
      * @param realFileName 真实文件名
-     * @return
      */
     public static void setAttachmentResponseHeader(HttpServletResponse response, String realFileName) throws UnsupportedEncodingException {
         String percentEncodedFileName = percentEncode(realFileName);

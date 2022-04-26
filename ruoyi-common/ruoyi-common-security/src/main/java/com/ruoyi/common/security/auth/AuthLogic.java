@@ -34,7 +34,7 @@ public class AuthLogic {
      */
     private static final String SUPER_ADMIN = "admin";
 
-    public TokenService tokenService = SpringUtils.getBean(TokenService.class);
+    public final TokenService tokenService = SpringUtils.getBean(TokenService.class);
 
     /**
      * 会话注销
@@ -111,7 +111,6 @@ public class AuthLogic {
      * 验证用户是否具备某权限, 如果验证未通过，则抛出异常: NotPermissionException
      *
      * @param permission 权限字符串
-     * @return 用户是否具备某权限
      */
     public void checkPermi(String permission) {
         if (!hasPermi(getPermiList(), permission)) {

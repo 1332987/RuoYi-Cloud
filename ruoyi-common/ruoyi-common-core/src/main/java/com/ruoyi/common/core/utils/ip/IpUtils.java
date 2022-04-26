@@ -154,7 +154,9 @@ public class IpUtils {
                     break;
                 case 4:
                     int i2 = 4;
-                    if (forElements(bytes, elements, i2)) return null;
+                    if (forElements(bytes, elements, i2)) {
+                        return null;
+                    }
                     break;
                 default:
                     return null;

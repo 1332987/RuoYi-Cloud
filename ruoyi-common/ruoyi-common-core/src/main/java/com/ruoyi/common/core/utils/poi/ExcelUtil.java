@@ -278,20 +278,13 @@ public class ExcelUtil<T> {
     }
 
     /**
-     * 对list数据源将其里面的数据导入到excel表单
-     *
-     * @param sheetName 工作表的名称
-     * @return 结果
-     */
-
-    /**
      * importExcel方法拓展 单方法不超过80行代码
      *
      * @param entity  /
      * @param entries /
      * @param row     /
-     * @throws InstantiationException
-     * @throws IllegalAccessException
+     * @throws InstantiationException /
+     * @throws IllegalAccessException /
      */
     public void importExcelExpand(T entity, Set<Map.Entry<Integer, Object[]>> entries, Row row) throws InstantiationException, IllegalAccessException {
 
@@ -360,8 +353,6 @@ public class ExcelUtil<T> {
      * @param response  返回数据
      * @param list      导出数据集合
      * @param sheetName 工作表的名称
-     * @return 结果
-     * @throws IOException
      */
     public void exportExcel(HttpServletResponse response, List<T> list, String sheetName) {
         exportExcel(response, list, sheetName, StringUtils.EMPTY);
@@ -374,8 +365,6 @@ public class ExcelUtil<T> {
      * @param list      导出数据集合
      * @param sheetName 工作表的名称
      * @param title     标题
-     * @return 结果
-     * @throws IOException
      */
     public void exportExcel(HttpServletResponse response, List<T> list, String sheetName, String title) {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -388,7 +377,6 @@ public class ExcelUtil<T> {
      * 对list数据源将其里面的数据导入到excel表单
      *
      * @param sheetName 工作表的名称
-     * @return 结果
      */
     public void importTemplateExcel(HttpServletResponse response, String sheetName) {
         importTemplateExcel(response, sheetName, StringUtils.EMPTY);
@@ -399,7 +387,6 @@ public class ExcelUtil<T> {
      *
      * @param sheetName 工作表的名称
      * @param title     标题
-     * @return 结果
      */
     public void importTemplateExcel(HttpServletResponse response, String sheetName, String title) {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -411,7 +398,6 @@ public class ExcelUtil<T> {
     /**
      * 对list数据源将其里面的数据导入到excel表单
      *
-     * @return 结果
      */
     public void exportExcel(HttpServletResponse response) {
         try {
@@ -703,7 +689,6 @@ public class ExcelUtil<T> {
      *
      * @param value 数据值
      * @param excel 数据注解
-     * @return
      */
     public String dataFormatHandlerAdapter(Object value, Excel excel) {
         try {
@@ -762,7 +747,7 @@ public class ExcelUtil<T> {
      * @param field 字段
      * @param excel 注解
      * @return 最终的属性值
-     * @throws Exception
+     * @throws Exception /
      */
     private Object getTargetValue(T vo, Field field, Excel excel) throws Exception {
         Object o = field.get(vo);
@@ -783,10 +768,10 @@ public class ExcelUtil<T> {
     /**
      * 以类的属性的get方法方法形式获取值
      *
-     * @param o
-     * @param name
+     * @param o /
+     * @param name /
      * @return value
-     * @throws Exception
+     * @throws Exception /
      */
     private Object getValue(Object o, String name) throws Exception {
         if (StringUtils.isNotNull(o) && StringUtils.isNotEmpty(name)) {
@@ -926,7 +911,7 @@ public class ExcelUtil<T> {
      * 判断是否是空行
      *
      * @param row 判断的行
-     * @return
+     * @return true
      */
     private boolean isRowEmpty(Row row) {
         if (row == null) {

@@ -43,7 +43,7 @@ public final class HtmlFilter {
     private static final Pattern P_BOTH_ARROWS = Pattern.compile("<>");
 
     /**
-     * @xxx could grow large... maybe use sesat's ReferenceMap
+     *  could grow large... maybe use sesat's ReferenceMap
      */
     private static final ConcurrentMap<String, Pattern> P_REMOVE_PAIR_BLANKS = new ConcurrentHashMap<>();
     private static final ConcurrentMap<String, Pattern> P_REMOVE_SELF_BLANKS = new ConcurrentHashMap<>();
@@ -137,7 +137,6 @@ public final class HtmlFilter {
      *
      * @param conf map containing configuration. keys match field names.
      */
-    @SuppressWarnings("unchecked")
     public HtmlFilter(final Map<String, Object> conf) {
 
         assert conf.containsKey("vAllowed") : "configuration requires vAllowed";

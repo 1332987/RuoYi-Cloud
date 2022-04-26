@@ -16,7 +16,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -101,9 +100,8 @@ public class LogAspect {
      *
      * @param log     日志
      * @param operLog 操作日志
-     * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog, Object jsonResult) throws Exception {
+    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog, Object jsonResult) {
         // 设置action动作
         operLog.setBusinessType(log.businessType().ordinal());
         // 设置标题
@@ -160,7 +158,6 @@ public class LogAspect {
      * @param o 对象信息。
      * @return 如果是需要过滤的对象，则返回true；否则返回false。
      */
-    @SuppressWarnings("rawtypes")
     public boolean isFilterObject(final Object o) {
         Class<?> clazz = o.getClass();
         if (clazz.isArray()) {

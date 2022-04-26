@@ -19,7 +19,6 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 public class RouterFunctionConfiguration {
     private final ValidateCodeHandler validateCodeHandler;
 
-    @SuppressWarnings("rawtypes")
     @Bean
     public RouterFunction routerFunction() {
         return RouterFunctions.route(

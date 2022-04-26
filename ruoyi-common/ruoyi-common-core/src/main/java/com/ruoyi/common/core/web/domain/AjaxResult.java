@@ -99,7 +99,7 @@ public class AjaxResult extends HashMap<String, Object> {
     /**
      * 返回错误消息
      *
-     * @return
+     * @return /
      */
     public static AjaxResult error() {
         return AjaxResult.error("操作失败");
@@ -140,9 +140,9 @@ public class AjaxResult extends HashMap<String, Object> {
     /**
      * 方便链式调用
      *
-     * @param key
-     * @param value
-     * @return
+     * @param key /
+     * @param value /
+     * @return /
      */
     @Override
     public AjaxResult put(String key, Object value) {

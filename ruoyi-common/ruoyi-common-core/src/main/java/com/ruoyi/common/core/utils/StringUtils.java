@@ -505,14 +505,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *
      * @param pattern 匹配规则
      * @param url     需要匹配的url
-     * @return
+     * @return /
      */
     public static boolean isMatch(String pattern, String url) {
         AntPathMatcher matcher = new AntPathMatcher();
         return matcher.match(pattern, url);
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T cast(Object obj) {
         return (T) obj;
     }

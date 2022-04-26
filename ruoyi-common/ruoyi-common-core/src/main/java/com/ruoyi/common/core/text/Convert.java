@@ -268,7 +268,7 @@ public class Convert {
      * 转换为Integer数组<br>
      *
      * @param split 分隔符
-     * @param split 被转换的值
+     * @param str 被转换的值
      * @return 结果
      */
     public static Integer[] toIntArray(String split, String str) {
@@ -318,7 +318,7 @@ public class Convert {
      * 转换为String数组<br>
      *
      * @param split 分隔符
-     * @param split 被转换的值
+     * @param str 被转换的值
      * @return 结果
      */
     public static String[] toStrArray(String split, String str) {
@@ -515,9 +515,7 @@ public class Convert {
             return defaultValue;
         }
         if (clazz.isAssignableFrom(value.getClass())) {
-            @SuppressWarnings("unchecked")
-            E myE = (E) value;
-            return myE;
+            return (E) value;
         }
         final String valueStr = toStr(value, null);
         if (StringUtils.isEmpty(valueStr)) {
