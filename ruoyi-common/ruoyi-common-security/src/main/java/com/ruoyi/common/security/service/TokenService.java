@@ -10,7 +10,7 @@ import com.ruoyi.common.core.utils.uuid.IdUtils;
 import com.ruoyi.common.redis.service.RedisService;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.model.LoginUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @author ruoyi
  */
 @Component
+@RequiredArgsConstructor
 public class TokenService {
     protected static final long MILLIS_SECOND = 1000;
     protected static final long MILLIS_MINUTE = 60 * MILLIS_SECOND;
@@ -31,8 +32,7 @@ public class TokenService {
     private final static long EXPIRE_TIME = CacheConstants.EXPIRATION;
 
     private final static String ACCESS_TOKEN = CacheConstants.LOGIN_TOKEN_KEY;
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
 
     /**
      * 创建令牌
@@ -48,13 +48,13 @@ public class TokenService {
         refreshToken(loginUser);
 
         // Jwt存储信息
-        Map<String, Object> claimsMap = new HashMap<String, Object>(2);
+        Map<String, Object> claimsMap = new HashMap<>(2);
         claimsMap.put(SecurityConstants.USER_KEY, token);
         claimsMap.put(SecurityConstants.DETAILS_USER_ID, userId);
         claimsMap.put(SecurityConstants.DETAILS_USERNAME, userName);
 
         // 接口返回信息
-        Map<String, Object> rspMap = new HashMap<String, Object>(2);
+        Map<String, Object> rspMap = new HashMap<>(2);
         rspMap.put("access_token", JwtUtils.createToken(claimsMap));
         rspMap.put("expires_in", EXPIRE_TIME);
         return rspMap;
@@ -105,7 +105,7 @@ public class TokenService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
 
     /**

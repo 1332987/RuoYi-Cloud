@@ -97,7 +97,7 @@ public class ExcelUtil<T> {
     /**
      * 统计列表
      */
-    private Map<Integer, Double> statistics = new HashMap<Integer, Double>();
+    private Map<Integer, Double> statistics = new HashMap<>();
 
     public ExcelUtil(Class<T> clazz) {
         this.clazz = clazz;
@@ -173,7 +173,7 @@ public class ExcelUtil<T> {
 
     public void init(List<T> list, String sheetName, String title, Type type) {
         if (list == null) {
-            list = new ArrayList<T>();
+            list = new ArrayList<>();
         }
         this.list = list;
         this.sheetName = sheetName;
@@ -231,7 +231,7 @@ public class ExcelUtil<T> {
     public List<T> importExcel(String sheetName, InputStream is, int titleNum) throws Exception {
         this.type = Type.IMPORT;
         this.wb = WorkbookFactory.create(is);
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         // 如果指定sheet名,则取指定sheet中的内容 否则默认指向第1个sheet
         Sheet sheet = StringUtils.isNotEmpty(sheetName) ? wb.getSheet(sheetName) : wb.getSheetAt(0);
         if (sheet == null) {
@@ -241,7 +241,7 @@ public class ExcelUtil<T> {
         int rows = sheet.getLastRowNum();
         if (rows > 0) {
             // 定义一个map用于存放excel列的序号和field.
-            Map<String, Integer> cellMap = new HashMap<String, Integer>(2);
+            Map<String, Integer> cellMap = new HashMap<>(2);
             // 获取表头
             Row heard = sheet.getRow(titleNum);
             for (int i = 0; i < heard.getPhysicalNumberOfCells(); i++) {
@@ -255,7 +255,7 @@ public class ExcelUtil<T> {
             }
             // 有数据时才处理 得到类的所有field.
             List<Object[]> fields = this.getFields();
-            Map<Integer, Object[]> fieldsMap = new HashMap<Integer, Object[]>(2);
+            Map<Integer, Object[]> fieldsMap = new HashMap<>(2);
             for (Object[] objects : fields) {
                 Excel attr = (Excel) objects[1];
                 Integer column = cellMap.get(attr.name());
@@ -270,9 +270,8 @@ public class ExcelUtil<T> {
                 if (isRowEmpty(row)) {
                     continue;
                 }
-                T entity = null;
-                importExcelExpand(entity, fieldsMap.entrySet(), row);
-                list.add(entity);
+                importExcelExpand(null, fieldsMap.entrySet(), row);
+                list.add(null);
             }
         }
         return list;
@@ -343,17 +342,15 @@ public class ExcelUtil<T> {
                     }
                 }
             }
-            if (StringUtils.isNotNull(fieldType)) {
-                String propertyName = field.getName();
-                if (StringUtils.isNotEmpty(attr.targetAttr())) {
-                    propertyName = field.getName() + "." + attr.targetAttr();
-                } else if (StringUtils.isNotEmpty(attr.readConverterExp())) {
-                    val = reverseByExp(Convert.toStr(val), attr.readConverterExp(), attr.separator());
-                } else if (!attr.handler().equals(ExcelHandlerAdapter.class)) {
-                    val = dataFormatHandlerAdapter(val, attr);
-                }
-                ReflectUtils.invokeSetter(entity, propertyName, val);
+            String propertyName = field.getName();
+            if (StringUtils.isNotEmpty(attr.targetAttr())) {
+                propertyName = field.getName() + "." + attr.targetAttr();
+            } else if (StringUtils.isNotEmpty(attr.readConverterExp())) {
+                val = reverseByExp(Convert.toStr(val), attr.readConverterExp(), attr.separator());
+            } else if (!attr.handler().equals(ExcelHandlerAdapter.class)) {
+                val = dataFormatHandlerAdapter(val, attr);
             }
+            ReflectUtils.invokeSetter(entity, propertyName, val);
         }
     }
 
@@ -480,7 +477,7 @@ public class ExcelUtil<T> {
      */
     private Map<String, CellStyle> createStyles(Workbook wb) {
         // 写入各条记录,每条记录对应excel表中的一行
-        Map<String, CellStyle> styles = new HashMap<String, CellStyle>(2);
+        Map<String, CellStyle> styles = new HashMap<>(2);
         CellStyle style = wb.createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -494,14 +491,7 @@ public class ExcelUtil<T> {
         style = wb.createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
-        style.setBorderRight(BorderStyle.THIN);
-        style.setRightBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
-        style.setBorderLeft(BorderStyle.THIN);
-        style.setLeftBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
-        style.setBorderTop(BorderStyle.THIN);
-        style.setTopBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBottomBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        setBorderRighut(style);
         Font dataFont = wb.createFont();
         dataFont.setFontName("Arial");
         dataFont.setFontHeightInPoints((short) 10);
@@ -532,6 +522,17 @@ public class ExcelUtil<T> {
         styles.put("total", style);
 
         return styles;
+    }
+
+    private void setBorderRighut(CellStyle style) {
+        style.setBorderRight(BorderStyle.THIN);
+        style.setRightBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setLeftBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
     }
 
     /**
@@ -655,14 +656,7 @@ public class ExcelUtil<T> {
         CellStyle style = wb.createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
-        style.setBorderRight(BorderStyle.THIN);
-        style.setRightBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
-        style.setBorderLeft(BorderStyle.THIN);
-        style.setLeftBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
-        style.setBorderTop(BorderStyle.THIN);
-        style.setTopBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBottomBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        setBorderRighut(style);
         style.setAlignment(excel.align());
         Font dataFont = wb.createFont();
         dataFont.setFontName("Arial");
@@ -817,7 +811,7 @@ public class ExcelUtil<T> {
      * 获取字段注解信息
      */
     public List<Object[]> getFields() {
-        List<Object[]> fields = new ArrayList<Object[]>();
+        List<Object[]> fields = new ArrayList<>();
         List<Field> tempFields = new ArrayList<>();
         tempFields.addAll(Arrays.asList(clazz.getSuperclass().getDeclaredFields()));
         tempFields.addAll(Arrays.asList(clazz.getDeclaredFields()));
@@ -896,7 +890,7 @@ public class ExcelUtil<T> {
      */
     public Object getCellValue(Row row, int column) {
         if (row == null) {
-            return row;
+            return null;
         }
         Object val = "";
         try {

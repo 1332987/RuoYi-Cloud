@@ -9,6 +9,7 @@ import com.ruoyi.common.log.enums.BusinessStatus;
 import com.ruoyi.common.log.service.AsyncLogService;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.domain.SysOperLog;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -33,11 +34,10 @@ import java.util.Map;
  */
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class LogAspect {
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
-
-    @Autowired
-    private AsyncLogService asyncLogService;
+    private final AsyncLogService asyncLogService;
 
     /**
      * 处理完请求后执行

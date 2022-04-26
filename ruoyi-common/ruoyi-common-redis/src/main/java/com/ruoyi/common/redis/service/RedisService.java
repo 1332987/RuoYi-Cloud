@@ -1,5 +1,6 @@
 package com.ruoyi.common.redis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -17,9 +18,9 @@ import java.util.concurrent.TimeUnit;
  **/
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
+@RequiredArgsConstructor
 public class RedisService {
-    @Autowired
-    public RedisTemplate redisTemplate;
+    public final RedisTemplate redisTemplate;
 
     /**
      * 缓存基本的对象，Integer、String、实体类等

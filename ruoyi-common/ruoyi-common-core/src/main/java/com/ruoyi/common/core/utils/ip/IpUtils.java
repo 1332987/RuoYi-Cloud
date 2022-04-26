@@ -141,12 +141,8 @@ public class IpUtils {
                     break;
                 case 3:
                     int i1 = 2;
-                    for (i = 0; i < i1; ++i) {
-                        l = Integer.parseInt(elements[i]);
-                        if ((l < 0L) || (l > 255L)) {
-                            return null;
-                        }
-                        bytes[i] = (byte) (int) (l & 0xFF);
+                    if (forElements(bytes, elements, i1)) {
+                        return null;
                     }
                     l = Integer.parseInt(elements[2]);
                     long l4 = 65535L;
@@ -158,13 +154,7 @@ public class IpUtils {
                     break;
                 case 4:
                     int i2 = 4;
-                    for (i = 0; i < i2; ++i) {
-                        l = Integer.parseInt(elements[i]);
-                        if ((l < 0L) || (l > 255L)) {
-                            return null;
-                        }
-                        bytes[i] = (byte) (int) (l & 0xFF);
-                    }
+                    if (forElements(bytes, elements, i2)) return null;
                     break;
                 default:
                     return null;
@@ -173,6 +163,19 @@ public class IpUtils {
             return null;
         }
         return bytes;
+    }
+
+    private static boolean forElements(byte[] bytes, String[] elements, int i1) {
+        int i;
+        long l;
+        for (i = 0; i < i1; ++i) {
+            l = Integer.parseInt(elements[i]);
+            if ((l < 0L) || (l > 255L)) {
+                return true;
+            }
+            bytes[i] = (byte) (int) (l & 0xFF);
+        }
+        return false;
     }
 
     /**

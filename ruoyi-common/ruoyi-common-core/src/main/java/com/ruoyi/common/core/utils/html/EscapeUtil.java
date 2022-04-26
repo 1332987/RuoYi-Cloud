@@ -76,15 +76,14 @@ public class EscapeUtil {
                 if (c < 16) {
                     tmp.append("0");
                 }
-                tmp.append(Integer.toString(c, 16));
             } else {
                 tmp.append("%u");
                 if (c <= 0xfff) {
                     // issue#I49JU8@Gitee
                     tmp.append("0");
                 }
-                tmp.append(Integer.toString(c, 16));
             }
+            tmp.append(Integer.toString(c, 16));
         }
         return tmp.toString();
     }
@@ -131,9 +130,6 @@ public class EscapeUtil {
     public static void main(String[] args) {
         String html = "<script>alert(1);</script>";
         String escape = EscapeUtil.escape(html);
-        // String html = "<scr<script>ipt>alert(\"XSS\")</scr<script>ipt>";
-        // String html = "<123";
-        // String html = "123>";
         System.out.println("clean: " + EscapeUtil.clean(html));
         System.out.println("escape: " + escape);
         System.out.println("unescape: " + EscapeUtil.unescape(escape));
