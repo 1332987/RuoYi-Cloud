@@ -59,7 +59,7 @@ public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
         AtomicReference<String> bodyRef = new AtomicReference<>();
         body.subscribe(buffer -> {
             CharBuffer charBuffer = StandardCharsets.UTF_8.decode(buffer.asByteBuffer());
-            DataBufferUtils.release(buffer);
+            /*DataBufferUtils.release(buffer);*/
             bodyRef.set(charBuffer.toString());
         });
         return bodyRef.get();
