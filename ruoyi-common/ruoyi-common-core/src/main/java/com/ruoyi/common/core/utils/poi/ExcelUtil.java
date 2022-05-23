@@ -520,7 +520,7 @@ public class ExcelUtil<T> {
      */
     private Map<String, CellStyle> annotationStyles(Workbook wb)
     {
-        Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
+        Map<String, CellStyle> styles = new HashMap<>(2);
         for (Object[] os : fields)
         {
             Excel excel = (Excel) os[1];
