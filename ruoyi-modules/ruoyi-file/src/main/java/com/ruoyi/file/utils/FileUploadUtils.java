@@ -5,6 +5,7 @@ import com.ruoyi.common.core.exception.file.FileSizeLimitExceededException;
 import com.ruoyi.common.core.exception.file.InvalidExtensionException;
 import com.ruoyi.common.core.utils.DateUtils;
 import com.ruoyi.common.core.utils.StringUtils;
+import com.ruoyi.common.core.utils.file.FileTypeUtils;
 import com.ruoyi.common.core.utils.file.MimeTypeUtils;
 import com.ruoyi.common.core.utils.uuid.Seq;
 import org.apache.commons.io.FilenameUtils;
